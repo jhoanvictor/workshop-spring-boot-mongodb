@@ -47,11 +47,20 @@ public class UserResource {
 		User user = service.fromDTO(userDto);
 		user = service.insert(user);
 
-		//Criando cabeçalho com URL do novo recurso (User) criado
+		// Criando cabeçalho com URL do novo recurso (User) criado
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
-		
-		//Retornar uma resposta vazia com cabeçalho contendo novo recurso criado
+
+		// Retornar uma resposta vazia com cabeçalho contendo novo recurso criado
 		return ResponseEntity.created(uri).build();
+	}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Void> delete(@PathVariable String id) {
+
+		service.delete(id);
+		
+		//Resposta com código 204
+		return ResponseEntity.noContent().build();
 	}
 
 }
